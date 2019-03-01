@@ -1,7 +1,7 @@
 module Main where
 
 import Lib.StableMarriage
-import Lib.Stb
+import Lib.Stb as Stb
 import qualified Language.Dung.AF as AF
 
 main :: IO ()
@@ -14,4 +14,4 @@ main = do
         af' = fromListsToAF mPrefs' wPrefs'
     putStrLn $ "AF:  " ++ (show $ solve mPrefs wPrefs)
     putStrLn $ "AF': " ++ (show $ solve mPrefs' wPrefs')
-    putStrLn $ "*^k: " ++ (show $ AF.stableF $ revision af' af)
+    putStrLn $ "*^k: " ++ (show $ AF.stableF $ af' Stb.* af)

@@ -1,8 +1,8 @@
 module Lib.Stb
     ( kernel
     , krFree
-    , expansion
-    , revision
+    , (Lib.Stb.+)
+    , (Lib.Stb.*)
     ) where
 
 import qualified Language.Dung.AF as AF
@@ -24,11 +24,11 @@ kernelAtts (AF.AF args atts) =
         kStb = not . and . ([uncurry (/=), (`Set.member` selfAttacking) . fst] <*>) . (:[])
     in Prelude.filter kStb atts
 
-expansion :: (Ord a) => AF.DungAF a -> AF.DungAF a -> Maybe (AF.DungAF a)
-expansion = expandWith kernel
+(+) :: (Ord a) => AF.DungAF a -> AF.DungAF a -> Maybe (AF.DungAF a)
+(+) = expandWith kernel
 
-revision :: (Ord a) => AF.DungAF a -> AF.DungAF a -> AF.DungAF a
-revision f g =
+(*) :: (Ord a) => AF.DungAF a -> AF.DungAF a -> AF.DungAF a
+f * g =
     let g_k = kernel g
         expandWithCandidates = subAFs $ kernel f
         candidates = filter krFree $ map (kernel . (union g_k)) expandWithCandidates
