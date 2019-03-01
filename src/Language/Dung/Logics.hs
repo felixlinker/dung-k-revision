@@ -1,4 +1,4 @@
-module Lib.DungLogics
+module Language.Dung.Logics
     ( krFreeWith
     , union
     , expandWith

@@ -1,4 +1,4 @@
-module Lib.StableMarriage
+module Example.StableMarriage
     ( problemFromLists
     , problemToAF
     , fromListsToAF
@@ -20,7 +20,7 @@ problemFromLists mPrefs wPrefs = (mkPrefs mPrefs, mkPrefs wPrefs) where
     mkPrefs prefs = map (uncurry Prefs) $ zip [0,1..] prefs
 
 problemToAF :: StbMrgProblem -> StbMrgAF
-problemToAF (mPrefs, wPrefs) = 
+problemToAF (mPrefs, wPrefs) =
     let args = [ (m, w) | (Prefs m _) <- mPrefs, (Prefs w _) <- wPrefs ]
         atts = (foldToAtts mPrefs) ++ (map swapTuples $ foldToAtts wPrefs)
     in (AF.AF args atts) where
