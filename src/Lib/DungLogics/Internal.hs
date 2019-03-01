@@ -2,19 +2,26 @@ module Lib.DungLogics.Internal
     ( subAFs
     ) where
 
+import Control.Applicative
 import qualified Language.Dung.AF as AF
 import qualified Data.Set as Set
 import qualified Data.Set.Subsets as Subsets
 
 subAFs :: (Ord a) => AF.DungAF a -> [AF.DungAF a]
-subAFs (AF.AF [] _) = [AF.AF [] []]
 subAFs (AF.AF args atts) =
-    foldl1 (++) [ subAttAFs $ AF.AF subArgs atts | subArgs <- Subsets.subsetsDesc args (-1) $ length args ]
+    let subArgs = Subsets.subsetsDesc args (-1) $ length args
+        subAtts = Subsets.subsetsDesc atts (-1) $ length atts
+    in subAFs' (Set.fromList atts) subArgs subAtts
 
-subAttAFs :: (Ord a) => AF.DungAF a -> [AF.DungAF a]
-subAttAFs (AF.AF args atts) =
-    let atts' = filter inArgs atts
-    in [ AF.AF args subAtts | subAtts <- Subsets.subsetsDesc atts' (-1) $ length atts' ]
-    where
-        argsSet = Set.fromList args
-        inArgs (a, b) = a `Set.member` argsSet && b `Set.member` argsSet
+subAFs' :: (Ord a) => Set.Set (a, a) -> [[a]] -> [[(a, a)]] -> [AF.DungAF a]
+subAFs' _ (_:[]) _ = [AF.AF [] []]
+subAFs' baseAtts (_:args:subArgs) [] =
+    let atts = filterAttsInArgs (Set.fromList args) baseAtts
+        subAtts = Subsets.subsetsDesc (Set.toList atts) (-1) (Set.size atts)
+    in subAFs' baseAtts (args:subArgs) subAtts
+subAFs' baseAtts (args:subArgs) (atts:subAtts) =
+    AF.AF args atts : subAFs' baseAtts (args:subArgs) subAtts
+
+filterAttsInArgs :: (Ord a) => Set.Set a -> Set.Set (a, a) -> Set.Set (a, a)
+filterAttsInArgs args = let mem = (`Set.member` args)
+    in Set.filter ((||) <$> mem . fst <*> mem . snd)
