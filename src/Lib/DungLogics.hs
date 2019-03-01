@@ -7,7 +7,6 @@ module Lib.DungLogics
 import qualified Language.Dung.AF as AF
 import qualified Data.Set as Set
 import qualified Data.List as List
-import Lib.Internal
 
 type Kernel a = AF.DungAF a -> AF.DungAF a
 

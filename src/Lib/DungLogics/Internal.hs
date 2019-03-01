@@ -1,4 +1,4 @@
-module Lib.Internal
+module Lib.DungLogics.Internal
     ( subAFs
     ) where
 

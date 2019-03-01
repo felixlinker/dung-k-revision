@@ -1,7 +1,7 @@
 module Main where
 
 import Lib.StableMarriage
-import Lib.Stb as Stb
+import Lib.DungLogics.Stb as Stb
 import qualified Language.Dung.AF as AF
 
 main :: IO ()

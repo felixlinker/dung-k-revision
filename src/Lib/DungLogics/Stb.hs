@@ -1,8 +1,8 @@
-module Lib.Stb
+module Lib.DungLogics.Stb
     ( kernel
     , krFree
-    , (Lib.Stb.+)
-    , (Lib.Stb.*)
+    , (Lib.DungLogics.Stb.+)
+    , (Lib.DungLogics.Stb.*)
     ) where
 
 import qualified Language.Dung.AF as AF
@@ -10,10 +10,10 @@ import qualified Data.Set as Set
 import qualified Data.List as List
 import Control.Applicative
 import Lib.DungLogics
-import Lib.Internal
+import Lib.DungLogics.Internal
 
 kernel :: (Ord a) => AF.DungAF a -> AF.DungAF a
-kernel (AF.AF args atts) = AF.AF args $ Lib.Stb.kernelAtts (AF.AF args atts)
+kernel (AF.AF args atts) = AF.AF args $ kernelAtts (AF.AF args atts)
 
 krFree :: (Ord a) => AF.DungAF a -> Bool
 krFree = krFreeWith kernel
