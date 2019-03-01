@@ -1,0 +1,41 @@
+name:                dung-k-revision
+version:             0.1.0.0
+github:              "felixlinker/dung-k-revision"
+license:             MIT
+author:              "Felix Linker"
+maintainer:          "linkerfelix@gmail.com"
+copyright:           "2019 Felix Linker"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/dung-k-revision#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- Dung
+- containers
+- sort
+- subsets
+
+library:
+  source-dirs: src
+
+executables:
+  dung-k-revision-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - dung-k-revision
