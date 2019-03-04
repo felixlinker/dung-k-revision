@@ -27,10 +27,6 @@ dependencies:
 
 library:
   source-dirs: src
-  exposed-modules:
-  - Language.Dung.Logics
-  - Language.Dung.Logics.Internal
-  - Language.Dung.Logics.Stb
 
 executables:
   dung-k-revision-exe:
