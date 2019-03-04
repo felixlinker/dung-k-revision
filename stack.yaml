@@ -41,6 +41,7 @@ extra-deps:
 - containers-0.5.11.0
 - Dung-1.1
 - cmdargs-0.10.20
+- partial-order-0.1.2.1
 - http://hackage.haskell.org/package/subsets-0.1.0.1/candidate/subsets-0.1.0.1.tar.gz
 
 # Override default flag values for local packages and extra-deps

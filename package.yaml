@@ -24,6 +24,7 @@ dependencies:
 - Dung
 - containers
 - subsets
+- partial-order
 
 library:
   source-dirs: src

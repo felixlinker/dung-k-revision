@@ -1,5 +1,6 @@
 module Language.Dung.Logics
     ( krFreeWith
+    , modelsWith
     , union
     , expandWith
     ) where
@@ -7,13 +8,22 @@ module Language.Dung.Logics
 import qualified Language.Dung.AF as AF
 import qualified Data.Set as Set
 import qualified Data.List as List
+import qualified Data.PartialOrd as PartialOrd
 
 type Kernel a = AF.DungAF a -> AF.DungAF a
+
+instance Ord a => PartialOrd.PartialOrd (AF.DungAF a) where
+    (AF.AF args atts) <= (AF.AF args' atts') =
+        (Set.fromList args PartialOrd.<= Set.fromList args') &&
+        (Set.fromList atts PartialOrd.<= Set.fromList atts')
 
 krFreeWith :: (Ord a) => Kernel a -> AF.DungAF a -> Bool
 krFreeWith k (AF.AF args atts) =
     let (AF.AF _ kAtts) = k $ AF.AF args atts
     in (Set.fromList atts) == (Set.fromList kAtts)
+
+modelsWith :: (Ord a) => Kernel a -> AF.DungAF a -> AF.DungAF a -> Bool
+modelsWith k f g = (k g) PartialOrd.<= (k f)
 
 union :: (Ord a) => AF.DungAF a -> AF.DungAF a -> AF.DungAF a
 union (AF.AF [] _) x = x

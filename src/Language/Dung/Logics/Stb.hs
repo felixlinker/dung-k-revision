@@ -1,6 +1,7 @@
 module Language.Dung.Logics.Stb
     ( kernel
     , krFree
+    , (|=)
     , (Language.Dung.Logics.Stb.+)
     , (Language.Dung.Logics.Stb.*)
     ) where
@@ -23,6 +24,9 @@ kernelAtts (AF.AF args atts) =
     let selfAttacking = Set.fromList $ Prelude.map fst $ Prelude.filter (uncurry (==)) atts
         kStb = not . ((&&) <$> uncurry (/=) <*> ((`Set.member` selfAttacking) . fst))
     in Prelude.filter kStb atts
+
+(|=) :: (Ord a) => AF.DungAF a -> AF.DungAF a -> Bool
+(|=) = modelsWith kernel
 
 (+) :: (Ord a) => AF.DungAF a -> AF.DungAF a -> Maybe (AF.DungAF a)
 (+) = expandWith kernel
