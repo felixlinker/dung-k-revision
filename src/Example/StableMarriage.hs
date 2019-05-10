@@ -17,7 +17,7 @@ type StbMrgAF = AF.DungAF (Int, Int)
 problemFromLists :: StbMrgList -> StbMrgList -> StbMrgProblem
 problemFromLists mPrefs wPrefs = (mkPrefs mPrefs, mkPrefs wPrefs) where
     mkPrefs :: StbMrgList -> [StbMrgPreferences]
-    mkPrefs prefs = map (uncurry Prefs) $ zip [0,1..] prefs
+    mkPrefs = zipWith Prefs [0,1..]
 
 problemToAF :: StbMrgProblem -> StbMrgAF
 problemToAF (mPrefs, wPrefs) =
@@ -28,12 +28,12 @@ problemToAF (mPrefs, wPrefs) =
         toAtts (Prefs _ []) = []
         toAtts (Prefs x (p:ps)) = [ ((x,p), (x,p')) | p' <- ps ] ++ toAtts (Prefs x ps)
         foldToAtts :: [StbMrgPreferences] -> [((Int, Int), (Int, Int))]
-        foldToAtts ps = foldl (++) [] $ map toAtts ps
+        foldToAtts = concatMap toAtts
         swapTuples :: ((a, a), (a, a)) -> ((a, a), (a, a))
         swapTuples ((a, b), (c, d)) = ((b, a), (d, c))
 
 fromListsToAF :: StbMrgList -> StbMrgList -> StbMrgAF
-fromListsToAF = curry $ problemToAF . (uncurry problemFromLists)
+fromListsToAF = curry $ problemToAF . uncurry problemFromLists
 
 solve :: StbMrgList -> StbMrgList -> [[(Int, Int)]]
-solve = curry $ AF.stableF . (uncurry fromListsToAF)
+solve = curry $ AF.stableF . uncurry fromListsToAF
