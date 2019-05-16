@@ -16,13 +16,14 @@ module Language.Dung.Logics.Stb
 import qualified Language.Dung.AF as AF
 import qualified Data.Set as Set
 import qualified Data.List as List
+import qualified Data.PartialOrd as PO
 import Control.Applicative
 import Language.Dung.Logics
 import Language.Dung.Logics.Internal
 
 -- | Stable kernel. Maps the AF to a redundancy-free representative of its
 -- stable-strong-equivlance-class.
-kernel :: (Ord a) => AF.DungAF a -> AF.DungAF a
+kernel :: (Ord a) => Kernel a
 kernel (AF.AF args atts) = AF.AF args $ kernelAtts (AF.AF args atts)
 
 -- | Is the AF free of stable-redundancy?

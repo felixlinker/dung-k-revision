@@ -11,7 +11,8 @@
 -- An example implementation for stable-semantics can be found in
 -- "Language.Dung.Logics.Stb".
 module Language.Dung.Logics
-    ( krFreeWith
+    ( Kernel
+    , krFreeWith
     , modelsWith
     , union
     , expandWith
