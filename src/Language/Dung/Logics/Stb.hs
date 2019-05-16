@@ -49,6 +49,5 @@ kernelAtts (AF.AF args atts) =
 (*) :: (Ord a) => AF.DungAF a -> AF.DungAF a -> AF.DungAF a
 f * g =
     let g_k = kernel g
-        expandWithCandidates = subAFs $ kernel f
-        candidates = filter krFree $ map (kernel . (union g_k)) expandWithCandidates
-    in head candidates
+        candidates = subAFs $ union g_k $ kernel f
+    in head . filter (g_k PO.<=) . filter krFree $ candidates
